@@ -23,6 +23,7 @@ define('stage', ['mediator'], function (mediator) {
 
 	mediator.subscribe('game_start', function (canvasCtx) {
 		gameBg = new Image();
+
 		gameBg.src = bgPath;
 
 		gameBg.onload = function() {

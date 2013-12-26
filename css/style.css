@@ -2,6 +2,7 @@ body {
 	background: url(../img/main-bg.png) repeat 0 0;
 }
 
+/* canvas styles */
 #game-canvas {
 	display: block;
 	margin: 20px auto;

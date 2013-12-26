@@ -8,11 +8,26 @@ require(['mediator', 'event', 'stage', 'player'], function (mediator, event) {
 
 	// get coordinates of the mouse click
 	event.bind('click', canvas, function (e) {
-		var mouseX = e.clientX,
-			mouseY = e.clientY,
-			elDim = canvas.getBoundingClientRect();
+		var elDim = canvas.getBoundingClientRect(),
+			canvasX = e.clientX - elDim.left,
+			canvasY = e.clientY - elDim.top,
+			x = canvasX - x0,
+			y = y0 - canvasY,
+			direction = [];
 
-		mediator.publish('move_to', [{x: (mouseX - elDim.left), y: (mouseY - elDim.top)}]);
+		if (x > 50) {
+			direction.push('right');
+		} else if (x < -50) {
+			direction.push('left');
+		}
+
+		if (y > 50) {
+			direction.push('top');
+		} else if (y < -50) {
+			direction.push('bottom');
+		}
+
+		mediator.publish('move_to', [{x: canvasX, y: canvasY, direction: direction.join('|')}]);
 	});
 
 	// start the game

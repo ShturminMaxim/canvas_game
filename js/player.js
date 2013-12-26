@@ -18,10 +18,10 @@ define('player', ['mediator'], function (mediator) {
             'up':function(){},
             'left':function(){},
             'right':function(){},
-            'up/right':function(){},
-            'down/right':function(){},
-            'up/left':function(){},
-            'down/left':function(){}
+            'up|right':function(){},
+            'down|right':function(){},
+            'up|left':function(){},
+            'down|left':function(){}
         };
 
         //do player animation

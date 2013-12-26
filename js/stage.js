@@ -33,6 +33,11 @@ define('stage', ['mediator'], function (mediator) {
 		};
 	});
 
+	mediator.subscribe('move_to', function(canvasPos) {
+		console.log(canvasPos.x);
+		console.log(canvasPos.y);
+	});
+
 	mediator.subscribe('redraw', function(canvasCtx) {
 		canvasCtx.drawImage(gameBg,
 			canvasNode.width / 2 - gameBg.width / 2,

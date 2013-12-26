@@ -1,6 +1,6 @@
 define('player', ['mediator'], function (mediator) {
 	"use strict";
-	mediator.subscribe('game_start', function () {
-		alert('Player is ready!!!');
+	mediator.subscribe('game_start', function (ctx) {
+		console.log('Player is ready!!!');
 	});
 });

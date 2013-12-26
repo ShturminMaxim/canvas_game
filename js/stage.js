@@ -17,34 +17,50 @@ define('stage', ['mediator'], function (mediator) {
 			sizeX: 320,
 			sizeY: 480
 		},
+		startX = 0,
+		startY = 0,
 		clickedX,
-		clickedY;
+		clickedY,
+		curX,
+		curY;
 
 	canvasNode.width = 320;
 	canvasNode.height = 480;
+	gameBg = new Image();
 
 	mediator.subscribe('game_start', function (canvasCtx) {
-		gameBg = new Image();
-		gameBg.src = bgPath;
-
 		gameBg.onload = function() {
+			curX = startX = canvasNode.width / 2 - gameBg.width / 2;
+			curY = startY = canvasNode.height / 2 - gameBg.height / 2;
+
 			canvasCtx.drawImage(gameBg,
-				canvasNode.width / 2 - gameBg.width / 2,
-				canvasNode.height / 2 - gameBg.height / 2
+				startX,
+				startY
 			);
 		};
+		gameBg.src = bgPath;
 	});
 
 	mediator.subscribe('move_to', function(canvasPos) {
 		clickedX = canvasPos.x;
 		clickedY = canvasPos.y;
+		if(clickedX < startX) {
+			curX = startX + clickedX;
+		} else {
+			curX = startX - clickedX;
+		}
+		if(clickedY < startY) {
+			curY = startY + clickedY;
+		} else {
+			curY = startY - clickedY;
+		}
 	});
 
 	mediator.subscribe('redraw', function(canvasCtx) {
 		canvasCtx.drawImage(
 			gameBg,
-			canvasNode.width / 2 - gameBg.width / 2 - clickedX,
-			canvasNode.height / 2 - gameBg.height / 2 - clickedY
+			curX,
+			curY
 		);
 	});
 

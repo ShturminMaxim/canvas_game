@@ -32,11 +32,6 @@ define('stage', ['mediator'], function (mediator) {
 		gameBg.onload = function() {
 			curX = startX = canvasNode.width / 2 - gameBg.width / 2;
 			curY = startY = canvasNode.height / 2 - gameBg.height / 2;
-
-			canvasCtx.drawImage(gameBg,
-				startX,
-				startY
-			);
 		};
 		gameBg.src = bgPath;
 	});

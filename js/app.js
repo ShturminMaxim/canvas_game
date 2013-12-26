@@ -2,6 +2,6 @@
 
     "use strict";
 
-	alert("Start!");
+	alert("Start new!");
 
 }());

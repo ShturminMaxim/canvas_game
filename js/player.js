@@ -1,7 +1,6 @@
-/**
- * Created with JetBrains WebStorm.
- * User: oleg.kirienko
- * Date: 26.12.13
- * Time: 12:06
- * To change this template use File | Settings | File Templates.
- */
+define('player', ['mediator'], function (mediator) {
+	"use strict";
+	mediator.subscribe('game_start', function () {
+		alert('Player is ready!!!');
+	});
+});

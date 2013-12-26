@@ -1,7 +1,37 @@
-/**
- * Created with JetBrains WebStorm.
- * User: oleg.kirienko
- * Date: 26.12.13
- * Time: 12:07
- * To change this template use File | Settings | File Templates.
- */
+define('mediator', function () {
+	"use strict";
+	return {
+		subscribers: {
+			any: [] // types of events
+		},
+		subscribe: function (type, fn, context) {
+			type = type || 'any';
+			fn = (typeof fn === 'function') ? fn : context[fn];
+			if (typeof this.subscribers[type] === 'undefined') {
+				this.subscribers[type] = [];
+			}
+			this.subscribers[type].push({fn: fn, context: context || this});
+		},
+		unSubscribe: function (type, fn, context) {
+			this.visitSubscribers('unsubscribe', type, fn, context);
+		},
+		publish: function (type, publication) {
+			this.visitSubscribers('publish', type, publication);
+		},
+		visitSubscribers: function (action, type, arg, context) {
+			var pubtype = type || 'any',
+				subscribers = this.subscribers[pubtype],
+				i,
+				max = subscribers ? subscribers.length : 0;
+			for (i = 0; i < max; i += 1) {
+				if (action === 'publish') {
+					subscribers[i].fn.call(subscribers[i].context, arg);
+				} else {
+					if (subscribers[i].fn === arg && subscribers[i].context === context) {
+						subscribers.splice(i, 1);
+					}
+				}
+			}
+		}
+	};
+});

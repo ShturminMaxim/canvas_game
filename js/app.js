@@ -1,7 +1,4 @@
-;(function() {
-
+require(['mediator', 'stage', 'player'], function (mediator) {
     "use strict";
-
-	alert("Start 123!");
-
-}());
+	mediator.publish('game_start');
+});

@@ -1,6 +1,12 @@
+body {
+	background: url(../img/main-bg.png) repeat 0 0;
+}
+
+/* canvas styles */
 #game-canvas {
 	display: block;
 	margin: 20px auto;
-	width: 320px;
-	height: 480px;
+	border: 8px solid rgb(177, 177, 177);
+	border-radius: 10px;
+	box-shadow: 0px 6px 10px #4D4D4D, 0px 0px 4px #070707;
 }

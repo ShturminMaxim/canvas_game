@@ -11,7 +11,7 @@ define('mediator', function () {
 			max = subs ? subs.length : 0;
 		for (i = 0; i < max; i += 1) {
 			if (action === 'publish') {
-				subs[i].fn.call(subs[i].context, arg);
+				subs[i].fn.apply(subs[i].context, arg);
 			} else {
 				if (subs[i].fn === arg && subs[i].context === context) {
 					subs.splice(i, 1);

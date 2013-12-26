@@ -7,14 +7,32 @@ define('player', ['mediator'], function (mediator) {
     var posX = 135;
     var posY = 215;
 
+
     image.src = "./img/char.png";
+
+    mediator.subscribe('move_to', function (coords) {
+        //get direction from click event
+        var direction =  coords.direction;
+        var animationDirection = {
+            'up/right':function(){},
+            'down/right':function(){},
+            'up/left':function(){},
+            'down/left':function(){}
+        };
+
+        //do player animation
+        animationDirection[direction]();
+
+    });
+
+
 	mediator.subscribe('game_start', function () {
         image.onload = function(){
             mediator.subscribe('redraw', function (ctx) {
                 ctx.drawImage(image, x, y, size, size, posX, posY, size, size);
             });
         };
-	});
+    });
 /*    return {
         redraw : function(){
             ctx.drawImage(image, x, y, size, size, posX, posY, size, size);

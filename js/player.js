@@ -8,15 +8,16 @@ define('player', ['mediator'], function (mediator) {
     var posY = 10;
 
     image.src = "./img/char.png";
-/*	mediator.subscribe('game_start', function (ctx) {
-
-*//*        image.onload = function(){
-            ctx.drawImage(image, 0, 0, size, size, 10, 10, size, size);
-        };*//*
-	});*/
-    return {
+	mediator.subscribe('game_start', function (ctx) {
+        image.onload = function(){
+            mediator.subscribe('redraw', function (ctx) {
+                ctx.drawImage(image, x, y, size, size, posX, posY, size, size);
+            });
+        };
+	});
+/*    return {
         redraw : function(){
             ctx.drawImage(image, x, y, size, size, posX, posY, size, size);
         }
-    }
+    }*/
 });

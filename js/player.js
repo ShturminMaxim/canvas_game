@@ -12,8 +12,12 @@ define('player', ['mediator'], function (mediator) {
 
     mediator.subscribe('move_to', function (coords) {
         //get direction from click event
-        var direction =  coords.direction;
+        var direction =  coords.direction? coords.direction : "right";
         var animationDirection = {
+            'down':function(){},
+            'up':function(){},
+            'left':function(){},
+            'right':function(){},
             'up/right':function(){},
             'down/right':function(){},
             'up/left':function(){},
@@ -33,9 +37,4 @@ define('player', ['mediator'], function (mediator) {
             });
         };
     });
-/*    return {
-        redraw : function(){
-            ctx.drawImage(image, x, y, size, size, posX, posY, size, size);
-        }
-    }*/
 });

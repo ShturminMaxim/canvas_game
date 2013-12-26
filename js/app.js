@@ -15,16 +15,16 @@ require(['mediator', 'event', 'stage', 'player'], function (mediator, event) {
 			y = y0 - canvasY,
 			direction = [];
 
+		if (y > 50) {
+			direction.push('up');
+		} else if (y < -50) {
+			direction.push('down');
+		}
+
 		if (x > 50) {
 			direction.push('right');
 		} else if (x < -50) {
 			direction.push('left');
-		}
-
-		if (y > 50) {
-			direction.push('top');
-		} else if (y < -50) {
-			direction.push('bottom');
 		}
 
 		mediator.publish('move_to', [{x: canvasX, y: canvasY, direction: direction.join('|')}]);

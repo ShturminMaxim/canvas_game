@@ -12,7 +12,7 @@ define('player', ['mediator'], function (mediator) {
 
     mediator.subscribe('move_to', function (coords) {
         //get direction from click event
-        var direction =  coords.direction? coords.direction : "right";
+        var direction =  coords.direction ? coords.direction : "right";
         var animationDirection = {
             'down':function(){},
             'up':function(){},

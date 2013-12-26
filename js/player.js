@@ -7,7 +7,7 @@ define('player', ['mediator'], function (mediator) {
     var y = 0;
     var posX = 140;
     var posY = 210;
-
+    var framesinAnimation = 4;
 
     image.src = "./img/user.png";
 
@@ -15,19 +15,26 @@ define('player', ['mediator'], function (mediator) {
         //get direction from click event
         var direction =  coords.direction ? coords.direction : "right";
         var animationDirection = {
-            'down':function(){},
-            'up':function(){},
-            'left':function(){},
-            'right':function(){},
-            'up|right':function(){},
-            'down|right':function(){},
-            'up|left':function(){},
-            'down|left':function(){}
+            'down':function(){ y = 0; },
+            'up':function(){ y = 180; },
+            'left':function(){ y = 60; },
+            'right':function(){ y = 120; },
+            'up|right':function(){ y = 430; },
+            'down|right':function(){ y = 310; },
+            'up|left':function(){ y = 370; },
+            'down|left':function(){ y = 240; }
         };
 
         //do player animation
         animationDirection[direction]();
 
+        function animate() {
+            x = frame * sizeX;
+            frame = frame + 1;
+            if(frame > framesinAnimation) {
+                frame = 0;
+            }
+        }
     });
 
 

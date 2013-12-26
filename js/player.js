@@ -1,14 +1,15 @@
 define('player', ['mediator'], function (mediator) {
 	"use strict";
     var image = new Image();
-    var size = 50;
+    var sizeX = 37;
+    var sizeY = 55;
     var x = 0;
     var y = 0;
-    var posX = 135;
-    var posY = 215;
+    var posX = 140;
+    var posY = 210;
 
 
-    image.src = "./img/char.png";
+    image.src = "./img/user.png";
 
     mediator.subscribe('move_to', function (coords) {
         //get direction from click event
@@ -33,7 +34,7 @@ define('player', ['mediator'], function (mediator) {
 	mediator.subscribe('game_start', function () {
         image.onload = function(){
             mediator.subscribe('redraw', function (ctx) {
-                ctx.drawImage(image, x, y, size, size, posX, posY, size, size);
+                ctx.drawImage(image, x, y, sizeX, sizeY, posX, posY, sizeX, sizeY);
             });
         };
     });

@@ -23,22 +23,36 @@ define('stage', ['mediator'], function (mediator) {
 
 	mediator.subscribe('game_start', function (canvasCtx) {
 		gameBg = new Image();
-
 		gameBg.src = bgPath;
 
 		gameBg.onload = function() {
 			canvasCtx.drawImage(gameBg,
 				canvasNode.width / 2 - gameBg.width / 2,
 				canvasNode.height / 2 - gameBg.height / 2
-//				bgClipPos.posX,
-//				bgClipPos.posY,
-//				bgClipPos.sizeX,
-//				bgClipPos.sizeY,
-//				bgGamePos.posX,
-//				bgGamePos.posY,
-//				bgGamePos.sizeX,
-//				bgGamePos.sizeY
 			);
 		};
 	});
+
+	mediator.subscribe('redraw', function(canvasCtx) {
+		canvasCtx.drawImage(gameBg,
+			canvasNode.width / 2 - gameBg.width / 2,
+			canvasNode.height / 2 - gameBg.height / 2
+		);
+	});
+
+	return {
+		redraw: function() {
+			canvasCtx.drawImage(
+				gameBg,
+				bgClipPos.posX,
+				bgClipPos.posY,
+				bgClipPos.sizeX,
+				bgClipPos.sizeY,
+				bgGamePos.posX,
+				bgGamePos.posY,
+				bgGamePos.sizeX,
+				bgGamePos.sizeY
+			);
+		}
+	}
 });

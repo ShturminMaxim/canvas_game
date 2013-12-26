@@ -1,14 +1,12 @@
-require(['mediator', 'stage', 'player'], function (mediator) {
+require(['mediator', 'event', 'stage', 'player'], function (mediator, event) {
     "use strict";
 	var canvas = document.getElementById('game-canvas'),
-		ctx = canvas.getContext('2d'),
-		grd = ctx.createLinearGradient(0, 0, 170, 0);
+		ctx = canvas.getContext('2d');
 
-	grd.addColorStop(0,"black");
-	grd.addColorStop(1,"white");
-
-	ctx.fillStyle = grd;
-	ctx.fillRect(20,20,150,100);
-
+	event.bind('click', canvas, function (e) {
+		var offsetX = e.clientX,
+			offsetY = e.clientY;
+		mediator.publish('move_to', [{x: offsetX, y: offsetY}]);
+	});
 	mediator.publish('game_start', [ctx]);
 });

@@ -1,4 +1,4 @@
-require(['mediator', 'event', 'stage', 'player'], function (mediator, event, stage, player) {
+require(['mediator', 'event', 'stage', 'player'], function (mediator, event) {
     "use strict";
 	var canvas = document.getElementById('game-canvas'),
 		ctx = canvas.getContext('2d');
@@ -19,7 +19,6 @@ require(['mediator', 'event', 'stage', 'player'], function (mediator, event, sta
 
 	// loop for redrawing objects on the stage
 	setInterval(function () {
-		stage.redraw();
-		player.redraw();
+		mediator.publish('redraw', [ctx]);
 	}, 15);
 });

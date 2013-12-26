@@ -4,11 +4,11 @@ define('player', ['mediator'], function (mediator) {
     var size = 50;
     var x = 0;
     var y = 0;
-    var posX = 10;
-    var posY = 10;
+    var posX = 135;
+    var posY = 215;
 
     image.src = "./img/char.png";
-	mediator.subscribe('game_start', function (ctx) {
+	mediator.subscribe('game_start', function () {
         image.onload = function(){
             mediator.subscribe('redraw', function (ctx) {
                 ctx.drawImage(image, x, y, size, size, posX, posY, size, size);

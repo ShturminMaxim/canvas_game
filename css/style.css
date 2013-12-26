@@ -1,8 +1,4 @@
-body {
-
-}
-
-canvas{
+#game-canvas {
 	display: block;
 	margin: 20px auto;
 	width: 320px;

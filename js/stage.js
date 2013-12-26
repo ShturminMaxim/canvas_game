@@ -8,15 +8,17 @@ define('stage', ['mediator'], function (mediator) {
 		bgGamePos = {
 			posX: 0,
 			posY: 0,
-			sizeX: 300,
-			sizeY: 480
+			sizeX: 1280,
+			sizeY: 800
 		},
 		bgClipPos = {
 			posX: 480,
 			posY: 160,
-			sizeX: 1280,
-			sizeY: 800
-		};
+			sizeX: 320,
+			sizeY: 480
+		},
+		clickedX,
+		clickedY;
 
 	canvasNode.width = 320;
 	canvasNode.height = 480;
@@ -34,30 +36,31 @@ define('stage', ['mediator'], function (mediator) {
 	});
 
 	mediator.subscribe('move_to', function(canvasPos) {
-		console.log(canvasPos.x);
-		console.log(canvasPos.y);
+		clickedX = canvasPos.x;
+		clickedY = canvasPos.y;
 	});
 
 	mediator.subscribe('redraw', function(canvasCtx) {
-		canvasCtx.drawImage(gameBg,
-			canvasNode.width / 2 - gameBg.width / 2,
-			canvasNode.height / 2 - gameBg.height / 2
+		canvasCtx.drawImage(
+			gameBg,
+			canvasNode.width / 2 - gameBg.width / 2 - clickedX,
+			canvasNode.height / 2 - gameBg.height / 2 - clickedY
 		);
 	});
 
-	return {
-		redraw: function() {
-			canvasCtx.drawImage(
-				gameBg,
-				bgClipPos.posX,
-				bgClipPos.posY,
-				bgClipPos.sizeX,
-				bgClipPos.sizeY,
-				bgGamePos.posX,
-				bgGamePos.posY,
-				bgGamePos.sizeX,
-				bgGamePos.sizeY
-			);
-		}
-	}
+//	return {
+//		redraw: function() {
+//			canvasCtx.drawImage(
+//				gameBg,
+//				bgClipPos.posX,
+//				bgClipPos.posY,
+//				bgClipPos.sizeX,
+//				bgClipPos.sizeY,
+//				bgGamePos.posX,
+//				bgGamePos.posY,
+//				bgGamePos.sizeX,
+//				bgGamePos.sizeY
+//			);
+//		}
+//	}
 });

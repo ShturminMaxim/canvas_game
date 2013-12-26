@@ -1,7 +1,7 @@
-;(function(){
+;(function() {
 
     "use strict";
 
-	alert("Start new!");
+	alert("Start 123!");
 
 }());

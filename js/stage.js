@@ -11,8 +11,8 @@ define('stage', ['mediator'], function (mediator) {
 		curY = 0;
 
 	mediator.subscribe('game_start', function (canvasCtx, canvas) {
+		canvasNode = canvas;
 		gameBg.onload = function() {
-			canvasNode = canvas;
 			curX = canvasNode.width / 2 - gameBg.width / 2;
 			curY = canvasNode.height / 2 - gameBg.height / 2;
 		};

@@ -35,7 +35,11 @@ define('stage', ['mediator'], function (mediator) {
 	});
 
 	return {
-		curX: curX,
-		curY: curY
+		curX: function() {
+			return curX;
+		},
+		curY: function() {
+			return curY;
+		}
 	}
 });

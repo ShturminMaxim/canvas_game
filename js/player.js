@@ -7,7 +7,9 @@ define('player', ['mediator'], function (mediator) {
     var y = 0;
     var posX = 140;
     var posY = 210;
-    var framesinAnimation = 4;
+    var framesinAnimation = 3;
+    var frame = 0;
+    var animationLoop;
 
     image.src = "./img/user.png";
 
@@ -15,25 +17,37 @@ define('player', ['mediator'], function (mediator) {
         //get direction from click event
         var direction =  coords.direction ? coords.direction : "right";
         var animationDirection = {
-            'down':function(){ y = 0; },
-            'up':function(){ y = 180; },
-            'left':function(){ y = 60; },
-            'right':function(){ y = 120; },
-            'up|right':function(){ y = 430; },
-            'down|right':function(){ y = 310; },
-            'up|left':function(){ y = 370; },
-            'down|left':function(){ y = 240; }
+            'down':function(){ y = 0; animate()},
+            'up':function(){ y = 180; animate()},
+            'left':function(){ y = 60; animate()},
+            'right':function(){ y = 120; animate()},
+            'up|right':function(){ y = 430; animate()},
+            'down|right':function(){ y = 310; animate()},
+            'up|left':function(){ y = 370; animate()},
+            'down|left':function(){ y = 240; animate()}
         };
 
         //do player animation
+        clearInterval(animationLoop);
         animationDirection[direction]();
 
+        //when player stops, animation stops too.
+        mediator.subscribe('move_stop', function () {
+            clearInterval(animationLoop);
+            x = 0;
+        });
+
         function animate() {
-            x = frame * sizeX;
-            frame = frame + 1;
-            if(frame > framesinAnimation) {
-                frame = 0;
-            }
+            var changeFrame = function() {
+                x = frame * sizeX;
+                frame = frame + 1;
+                if(frame > framesinAnimation) {
+                    frame = 0;
+                }
+            };
+            animationLoop = setInterval(function(){
+                changeFrame();
+            },120);
         }
     });
 

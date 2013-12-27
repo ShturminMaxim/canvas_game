@@ -26,15 +26,15 @@ require(['mediator', 'event', 'stage', 'player'], function (mediator, event) {
 		// clear current interval
 		clearInterval(timer);
 
-		if (x > 50) {
+		if (y > 50) {
 			direction.push('up');
-		} else if (x < -50) {
+		} else if (y < -50) {
 			direction.push('down');
 		}
 
-		if (y > 50) {
+		if (x > 50) {
 			direction.push('right');
-		} else if (y < -50) {
+		} else if (x < -50) {
 			direction.push('left');
 		}
 

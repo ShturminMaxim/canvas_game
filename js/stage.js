@@ -4,7 +4,7 @@ define('stage', ['mediator'], function (mediator) {
 
 	var canvasNode,
 		gameBg = new Image(),
-		bgPath = 'img/game-field.jpg',
+		bgPath = 'img/world.png',
 		clickedX = 0,
 		clickedY = 0,
 		curX = 0,

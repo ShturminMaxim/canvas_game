@@ -4,15 +4,15 @@ define('enemies', ['mediator', 'stage'], function (mediator, stage) {
 		clickedX,
 		clickedY,
 		posY = 10,
-		sizeX = 37,
-		sizeY = 55,
+		sizeX = 60,
+		sizeY = 80,
 		x = 0,
 		y = 0,
 		image = new Image(),
 		timer,
 		delay = 150;
 
-	image.src = './img/user.png';
+	image.src = './img/bear.png';
 
 	mediator.subscribe('game_start', function (ctx, canvas) {
 		image.onload = function() {

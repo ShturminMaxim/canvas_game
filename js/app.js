@@ -3,7 +3,8 @@ require(['mediator', 'event', 'stage', 'player'], function (mediator, event) {
 	var canvas = document.getElementById('game-canvas'),
 		ctx = canvas.getContext('2d'),
 		x0 = canvas.width/2,
-		y0 = canvas.height/2;
+		y0 = canvas.height/ 2,
+		timer;
 
 
 	// get coordinates of the mouse click
@@ -13,21 +14,42 @@ require(['mediator', 'event', 'stage', 'player'], function (mediator, event) {
 			canvasY = e.clientY - elDim.top,
 			x = canvasX - x0,
 			y = y0 - canvasY,
-			direction = [];
+			vectorLength = Math.sqrt(x * x + y * y),
+			alphaRad = Math.atan2(y, x),
+			direction = [],
+			delay = 15,
+			step = 5,
+			stepX = step * Math.cos(alphaRad),
+			stepY = step * Math.sin(alphaRad),
+			currentPos = 0;
 
-		if (y > 50) {
+		// clear current interval
+		clearInterval(timer);
+
+		if (x > 50) {
 			direction.push('up');
-		} else if (y < -50) {
+		} else if (x < -50) {
 			direction.push('down');
 		}
 
-		if (x > 50) {
+		if (y > 50) {
 			direction.push('right');
-		} else if (x < -50) {
+		} else if (y < -50) {
 			direction.push('left');
 		}
 
-		mediator.publish('move_to', [{x: canvasX, y: canvasY, direction: direction.join('|')}]);
+		mediator.publish('animation_start', [{x: canvasX, y: canvasY, direction: direction.join('|')}]);
+
+		timer = setInterval(function () {
+			if (currentPos < vectorLength) {
+				mediator.publish('do_animation', [{stepX: stepX, stepY: stepY}]);
+			} else {
+				clearInterval(timer);
+				currentPos = 0;
+				mediator.publish('animation_stop');
+			}
+			currentPos += step;
+		}, delay);
 	});
 
 	// start the game

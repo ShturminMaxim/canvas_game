@@ -32,6 +32,8 @@ define('stage', ['mediator'], function (mediator) {
 		gameBg.onload = function() {
 			curX = startX = canvasNode.width / 2 - gameBg.width / 2;
 			curY = startY = canvasNode.height / 2 - gameBg.height / 2;
+			console.log(curX);
+			console.log(curY);
 		};
 		gameBg.src = bgPath;
 	});
@@ -39,16 +41,7 @@ define('stage', ['mediator'], function (mediator) {
 	mediator.subscribe('move_to', function(canvasPos) {
 		clickedX = canvasPos.x;
 		clickedY = canvasPos.y;
-		if(clickedX < startX) {
-			curX = startX + clickedX;
-		} else {
-			curX = startX - clickedX;
-		}
-		if(clickedY < startY) {
-			curY = startY + clickedY;
-		} else {
-			curY = startY - clickedY;
-		}
+		// change position
 	});
 
 	mediator.subscribe('redraw', function(canvasCtx) {

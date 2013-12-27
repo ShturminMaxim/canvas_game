@@ -32,6 +32,28 @@ define('enemies', ['mediator', 'stage'], function (mediator, stage) {
                     stepY = step * Math.sin(alphaRad);
 
                 if (vectorLength>5) {
+                    var right;
+                    var left;
+                    var up;
+                    var down;
+
+                    if(stepX > 1) {
+                        right = false;
+                        left = true;
+                    }
+                    if(stepX < -1) {
+                        left = false;
+                        right = true;
+                    }
+                    if(stepY > 1) {
+                        down = true;
+                        up = false;
+                    }
+                    if(stepY < -1) {
+                        up = true;
+                        down = false;
+                    }
+                    console.log('right-'+right, 'left-'+left, 'up-'+up, 'down-'+down);
                     posX -= stepX;
                     posY += stepY;
                 } else {

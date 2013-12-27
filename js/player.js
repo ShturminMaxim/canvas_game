@@ -48,7 +48,7 @@ define('player', ['mediator'], function (mediator) {
             };
             animationLoop = setInterval(function(){
                 changeFrame();
-            },120);
+            },80);
         }
     });
 

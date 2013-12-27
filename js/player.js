@@ -13,9 +13,10 @@ define('player', ['mediator'], function (mediator) {
 
     image.src = "./img/user.png";
 
-    mediator.subscribe('move_to', function (coords) {
+    mediator.subscribe('animation_start', function (coords) {
         //get direction from click event
         var direction =  coords.direction ? coords.direction : "right";
+
         var animationDirection = {
             'down':function(){ y = 0; animate()},
             'up':function(){ y = 180; animate()},
@@ -32,7 +33,7 @@ define('player', ['mediator'], function (mediator) {
         animationDirection[direction]();
 
         //when player stops, animation stops too.
-        mediator.subscribe('move_stop', function () {
+        mediator.subscribe('animation_stop', function () {
             clearInterval(animationLoop);
             x = 0;
         });

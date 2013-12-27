@@ -2,10 +2,14 @@ require(['mediator', 'event', 'stage', 'player'], function (mediator, event) {
     "use strict";
 	var canvas = document.getElementById('game-canvas'),
 		ctx = canvas.getContext('2d'),
-		x0 = canvas.width/2,
-		y0 = canvas.height/ 2,
+		canvasWidth = 600,
+		canvasHeight = 600,
+		x0 = canvasWidth/2,
+		y0 = canvasHeight/2,
 		timer;
 
+	canvas.width = canvasWidth;
+	canvas.height = canvasHeight;
 
 	// get coordinates of the mouse click
 	event.bind('click', canvas, function (e) {
@@ -53,7 +57,7 @@ require(['mediator', 'event', 'stage', 'player'], function (mediator, event) {
 	});
 
 	// start the game
-	mediator.publish('game_start', [ctx]);
+	mediator.publish('game_start', [ctx, canvas]);
 
 	// loop for redrawing objects on the stage
 	setInterval(function () {

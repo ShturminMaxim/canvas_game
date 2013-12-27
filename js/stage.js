@@ -38,9 +38,11 @@ define('stage', ['mediator'], function (mediator) {
 		gameBg.src = bgPath;
 	});
 
-	mediator.subscribe('move_to', function(canvasPos) {
-		clickedX = canvasPos.x;
-		clickedY = canvasPos.y;
+	mediator.subscribe('do_animation', function(canvasPos) {
+		clickedX = canvasPos.stepX;
+		clickedY = canvasPos.stepY;
+		curX += (-clickedX);
+		curY += (clickedY);
 		// change position
 	});
 

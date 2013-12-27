@@ -53,7 +53,9 @@ define('player', ['mediator'], function (mediator) {
     });
 
 
-	mediator.subscribe('game_start', function () {
+	mediator.subscribe('game_start', function (ctx, canvas) {
+        posX = (canvas.width/2) - (sizeX/2);
+        posY = (canvas.height/2) - (sizeY/2);
         image.onload = function(){
             mediator.subscribe('redraw', function (ctx) {
                 ctx.drawImage(image, x, y, sizeX, sizeY, posX, posY, sizeX, sizeY);

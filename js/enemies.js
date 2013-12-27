@@ -36,24 +36,22 @@ define('enemies', ['mediator', 'stage'], function (mediator, stage) {
                     var left;
                     var up;
                     var down;
+                    var direction = [];
 
                     if(stepX > 1) {
-                        right = false;
-                        left = true;
+                        direction.push('left');
                     }
                     if(stepX < -1) {
-                        left = false;
-                        right = true;
+                        direction.push('right');
                     }
                     if(stepY > 1) {
-                        down = true;
-                        up = false;
+                        direction.push('down')
                     }
                     if(stepY < -1) {
-                        up = true;
-                        down = false;
+                        direction.push('up');
                     }
-                    console.log('right-'+right, 'left-'+left, 'up-'+up, 'down-'+down);
+
+                    console.log(direction.join('|'));
                     posX -= stepX;
                     posY += stepY;
                 } else {

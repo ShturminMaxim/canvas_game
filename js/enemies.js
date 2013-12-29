@@ -1,71 +1,102 @@
 define('enemies', ['mediator', 'stage'], function (mediator, stage) {
 	"use strict";
-	var posX = 10,
-        posY = 10,
-		clickedX,
-		clickedY,
-		sizeX = 60,
-		sizeY = 80,
-		x = 0,
-		y = 0,
-		image = new Image(),
-		timer,
-		delay = 60;
+    function Enemy(config) {
+        var that = {
+            canvas : config.canvas,
+            posX : config.startX || 10,
+            posY : config.startX || 10,
+            sizeX : 60,
+            sizeY : 80,
+            x : 0,
+            y : 0,
+            isChasing:false
+        };
+        var delay = 60;
 
-	image.src = './img/bear.png';
+        // INIT BEAR
+        that.image = new Image();
+        that.image.src = './img/bear.png';
+        that.chasing = function () {
+            var canvasX = stage.curX(),
+                canvasY = stage.curY(),
 
-	mediator.subscribe('game_start', function (ctx, canvas) {
-		image.onload = function() {
-			mediator.subscribe('redraw', function (ctx) {
-				ctx.drawImage(image, x, y, sizeX, sizeY, posX, posY, sizeX, sizeY);
-			});
-            timer = setInterval(function () {
-                var canvasX = stage.curX(),
-                    canvasY = stage.curY(),
+                mx = canvasX - (stage.curX()-that.posX+that.canvas.width /2),
+                my = (stage.curY()-that.posY+that.canvas.width /2) - canvasY,
+                vectorLength = Math.sqrt(mx * mx + my * my),
+                alphaRad = Math.atan2(my, mx),
+                step = 5,
+                stepX = step * Math.cos(alphaRad),
+                stepY = step * Math.sin(alphaRad);
 
-                    mx = canvasX - (stage.curX()-posX+canvas.width /2),
-                    my = (stage.curY()-posY+canvas.width /2) - canvasY,
-                    vectorLength = Math.sqrt(mx * mx + my * my),
-                    alphaRad = Math.atan2(my, mx),
-                    step = 5,
-                    stepX = step * Math.cos(alphaRad),
-                    stepY = step * Math.sin(alphaRad);
+            if (vectorLength>5) {
+                var right;
+                var left;
+                var up;
+                var down;
+                var direction = [];
 
-                if (vectorLength>5) {
-                    var right;
-                    var left;
-                    var up;
-                    var down;
-                    var direction = [];
-
-                    if(stepX > 1) {
-                        direction.push('left');
-                    }
-                    if(stepX < -1) {
-                        direction.push('right');
-                    }
-                    if(stepY > 1) {
-                        direction.push('down')
-                    }
-                    if(stepY < -1) {
-                        direction.push('up');
-                    }
-
-                    console.log(direction.join('|'));
-                    posX -= stepX;
-                    posY += stepY;
-                } else {
-                    clearInterval(timer);
-                    alert('You are Dead!');
+                if(stepX > 1) {
+                    direction.push('left');
                 }
-            }, delay);
-		};
-	});
+                if(stepX < -1) {
+                    direction.push('right');
+                }
+                if(stepY > 1) {
+                    direction.push('down')
+                }
+                if(stepY < -1) {
+                    direction.push('up');
+                }
 
-mediator.subscribe('do_animation', function(canvasPos) {
-		clickedX = canvasPos.stepX;
-		clickedY = canvasPos.stepY;
-		posX += (-clickedX);
-		posY += clickedY;
+                console.log(direction.join('|'));
+                that.posX -= stepX;
+                that.posY += stepY;
+
+                that.isChasing = true;
+                setTimeout(that.chasing, delay);
+            } else {
+                alert('You are Dead!');
+            }
+        };
+        return that;
+    }
+    var enemies = [];
+    var addEnemy = function(ctx, canvas){
+        enemies.push(new Enemy({
+            type:'bear',
+            context:ctx,
+            canvas:canvas,
+            startX:10,
+            startY:10
+        }));
+    };
+    var enemiesChasingInit = function(){
+        enemies.forEach(function(elem){
+            if(!elem.isChasing) {
+                elem.chasing();
+            }
+        })
+    };
+    mediator.subscribe('game_start', function (ctx, canvas) {
+        addEnemy(ctx, canvas);
+        enemiesChasingInit();
+        setInterval(function(){
+            addEnemy(ctx, canvas);
+            enemiesChasingInit();
+        }, 2000);
+    });
+
+    mediator.subscribe('redraw', function (ctx) {
+        enemies.forEach(function(elem){
+            ctx.drawImage(elem.image, elem.x, elem.y, elem.sizeX, elem.sizeY, elem.posX, elem.posY, elem.sizeX, elem.sizeY);
+        })
+    });
+
+
+    mediator.subscribe('do_animation', function(canvasPos) {
+        enemies.forEach(function(elem){
+            elem.posX += (-canvasPos.stepX);
+            elem.posY += canvasPos.stepY;
+        });
 	});
 });

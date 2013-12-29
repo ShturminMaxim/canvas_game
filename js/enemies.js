@@ -20,8 +20,8 @@ define('enemies', ['mediator', 'stage'], function (mediator, stage) {
             var canvasX = stage.curX(),
                 canvasY = stage.curY(),
 
-                mx = canvasX - (stage.curX()-that.posX+that.canvas.width /2),
-                my = (stage.curY()-that.posY+that.canvas.width /2) - canvasY,
+                mx = canvasX - (stage.curX()- that.posX - (that.sizeX/2) + that.canvas.width /2),
+                my = (stage.curY()-that.posY - (that.sizeY/2) +that.canvas.width /2) - canvasY,
                 vectorLength = Math.sqrt(mx * mx + my * my),
                 alphaRad = Math.atan2(my, mx),
                 step = 5,
@@ -48,14 +48,14 @@ define('enemies', ['mediator', 'stage'], function (mediator, stage) {
                     direction.push('up');
                 }
 
-                console.log(direction.join('|'));
+                //console.log(direction.join('|'));
                 that.posX -= stepX;
                 that.posY += stepY;
 
                 that.isChasing = true;
                 setTimeout(that.chasing, delay);
             } else {
-                alert('You are Dead!');
+                console.warn('You are Dead!');
             }
         };
         return that;

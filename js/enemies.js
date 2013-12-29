@@ -66,8 +66,8 @@ define('enemies', ['mediator', 'stage'], function (mediator, stage) {
             type:'bear',
             context:ctx,
             canvas:canvas,
-            startX:10,
-            startY:10
+            startX: Math.random()*600,
+            startY: Math.random()*600
         }));
     };
     var enemiesChasingInit = function(){
